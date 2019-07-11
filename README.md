@@ -12,7 +12,7 @@ In particolar, it is requested to compute the following quality parameters:
 5. Defects
 6. Overall Symbol Grade
 
-![Example](https://github.com/francovia/Barcodes/tree/master/codici-lineari-dati/images/1.png)
+![Example](/codici-lineari-dati/images/1.png)
 
 ## ROI
 
