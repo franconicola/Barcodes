@@ -17,40 +17,40 @@ In particolar, it is requested to compute the following quality parameters:
 ## ROI
 
 ### Binarization
-In order to produce a correct binarization of the image, I have used Otsu's Threshold, then I applied a morphology operator with a vertical line dimensional kernel, in opening configuration, to eliminate from the image different objects not relates to the barcode.
-After this, a new morphology operation, a dilation by a small rectangular kernel (3 rows, 1 col), several times, to connect all the regions of the barcode and creating a big one rectangle.
+In order to produce a correct binarization of the image, I've used Otsu's Threshold, then I've applied a morphology operator composed by a vertical line dimension kernel, in opening configuration, to eliminate other objects not related to the barcode.
+After, a new morphology operation, a dilation by a small rectangular kernel (3 rows, 1 col), several times, to connect all the regions of the barcode and creating a big one rectangle.
 
 ![Example](/codici-lineari-dati/images/2.png)
 
 ### Labeling
-According to the Flood-fill approach, I can find all the labels. Furthermore, to find exactly my barcode I compute all the areas and I estimate the biggest one. in this manner the biggest has to be the area of the barcode. Then I want to eliminate all the other labels, with areas less than my barcode.
+According to the Flood-fill approach, I can find all the labels. Furthermore, to find exactly the barcode into the image, I've used all object's areas and I've taken the biggest one. Then I've eliminated all the other labels, with areas less than the barcode.
 
 ### Position and Orientation
-In this section, I have used the function RotatedRect that it gives me back the minimum enclosing rectangle(MER). And In order to find the minimum and maximum x and y position of the barcode, I have checked all the corners of my MER.
-While, to find angle, I have used the difference between two y positons of respectively, the right and left corner along the x direction, i.e. the same side of the rectangle.
-At the end, by using warpAffine function, I create a rotation matrix with the angle founded before, and I rotated and cutted the image.
+In this section, I've used the function RotatedRect that it gives me back the minimum enclosing rectangle(MER) and In order to find the minimum and maximum position of the barcode, I've checked all the corners of the MER.
+While, to find angle, I've computed the difference between the right and left corner along the x direction, i.e. the same side of the rectangle.
+At the end, by using warpAffine function, I've created a rotation matrix with the angle founded before, and I've rotated and cutted the image.
 
 ![Example](/codici-lineari-dati/images/4.png)
 
 ### X-dimension
-To get a precise estimation of my barcode, I just cutted my original image around the region of my barcode, with the previous steps. Then, I applied again the binarization with the Otsu's threshold and the morphology open operation with a vertical line element.
-Now, I create for each bar a bounded rect that contains the bar, after the estimation of the contours.
-Then to find the X dimensions requested of smallest bar of barcode, I evaluated all the bars in a for loop and I extracted the height, width and area.
-At the end, I store all the parameters in my parameter's vector and I cut again the image in the specific ROI.
+To get a precise estimation of my barcode, I've just cutted my original image around the region of my barcode, with the previous steps. Then, I've applied again the binarization with the Otsu's threshold and the morphology open operation with a vertical line element.
+After, I've created for each bar a bounded rect that contains the bar, after the estimation of the contours.
+Then to find the X dimensions requested of smallest bar of barcode, I've evaluated all the bars in a for loop and I've extracted the height, width and area.
+At the end, I've stored all the parameters in my parameter's vector and I've cutted again the image in the specific ROI.
 
 ![Example](/codici-lineari-dati/images/6.png)
 
 ## BARCODE PARAMETERS
 
-I started to create 10 parallel lines, by dividing the number of rows of my ROI, then I stored pixels values for each line into an scan_profile vector, with a for loop.
-I founded the first two parameters: Minimum Reflectance and Symbol Contrast.
-Then in another loop, I have defined the median line equal than the half of the Symbol Contrast SC/2. After that, I compute the frei chen operator, to evaluate the forward and backward pixels along the scan, in order to reduce the noise. So, when I am in the proximity of my median line, with two thresholds, one for the upper part and the other for the lower part of the edge, I can compute the edge contrast and update the number of edges founded.
-A similar procedure I have adopted to find the defects, at the end, if I find an edge I can compare the parameters with the desired one and I will store the parameters into the parameter's vector.
+I've started to create 10 parallel lines, by dividing the number of rows of my ROI, then I've stored pixels values for each line into an scan_profile vector, with a for loop.
+I've founded the first two parameters: Minimum Reflectance and Symbol Contrast.
+Then in another loop, I've defined the median line equal than the half of the Symbol Contrast SC/2. After that, I've computed frei-chen operator, to evaluate forward and backward pixels along the scan, in order to reduce noise. So, when I am in proximity of mean line, with two thresholds, one for upper part and the other for lower part of the edge, I've computed edge contrast and updated the number of edges founded. A similar procedure I've adopted to find defects. 
+At the end, if I've founded an edge I could compared parameters with the desired ones and I've stored parameters into parameter's vector.
 
 ![Example](/codici-lineari-dati/images/8.png)
 
 ### Overall Symbol Grade
-By using comparision between all the parameters, for all the parallel scans, I computed the Overall Symbol Grade. Then I compute the mean value between them.
-In conclusion, I created a function to print all the parameters founded previously in the barcode, to a excel file.
+By using comparision between all parameters, for all parallel scans, I've computed the Overall Symbol Grade, then the mean value.
+In conclusion, I've printed all parameters, founded previously, to a excel file.
 
 
