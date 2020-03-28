@@ -1,5 +1,12 @@
 # Barcodes
 
+
+### Dependencies
+
+OpenCV
+
+------
+
 Several images of linear barcodes are given, and it is asked to:
 - Find the ROI (Region Of Interest) with the Barcode and extract some characteristics
 - Estimate quality parameters of Barcode according to the specific ISO/IEC 15416
