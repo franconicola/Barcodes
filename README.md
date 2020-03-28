@@ -7,11 +7,11 @@ OpenCV
 
 ------
 
-Several images of linear barcodes are given, and it is asked to:
+Several images of linear barcodes are used as dataset to:
 - Find the ROI (Region Of Interest) with the Barcode and extract some characteristics
 - Estimate quality parameters of Barcode according to the specific ISO/IEC 15416
 
-In particolar, it is requested to compute the following quality parameters:
+In particolar, the following quality parameters are computed:
 1. Symbol Contrast
 2. Reflectance
 3. Min edge contrast
